@@ -9,9 +9,6 @@
   window.addEventListener('load', init);
 
   function dialogShow (state) {
-    if (state === 'begin') {
-      sessionStorage.setItem('queueSkip', 'active');
-    }
     const css = `
       .animated {
         animation-duration: 1s;
@@ -164,6 +161,7 @@
 
   function dialogSubmit (action, int) {
     if (action === 'skip') {
+      sessionStorage.setItem('queueSkip', 'active');
       sessionStorage.setItem('queueQty', int);
       document.getElementById('skip-dialog').classList.replace('slideInDown', 'slideOutUp');
       document.querySelector(btnQueue).click();
@@ -174,28 +172,28 @@
   }
 
   function evaluateQueue () {
-    sessionStorage.setItem('queueQty', Number(sessionStorage.getItem('queueQty')) - 1);
-    if (Number(sessionStorage.getItem('queueQty')) > 0) {
+    sessionStorage.queueQty = Number(sessionStorage.queueQty) - 1;
+    if (Number(sessionStorage.queueQty) > 0) {
       dialogShow('loading');
       document.querySelector(btnQueue).click();
     }
     else {
-      sessionStorage.removeItem('queueQty');
-      sessionStorage.removeItem('queueSkip');
       dialogShow('end');
+      sessionStorage.removeItem('queueSkip');
+      sessionStorage.removeItem('queueQty');
     }
   }
 
   function init () {
     if (location.href === urlQueue) {
-      if (sessionStorage.getItem('queueSkip') === 'active' && sessionStorage.getItem('queueQty') !== null) {
+      if (sessionStorage.queueSkip === 'active') {
         evaluateQueue();
       }
       else {
         dialogShow('begin');
       }
     }
-    else if (location.href.slice(0, urlItemBase.length) === urlItemBase && sessionStorage.getItem('queueSkip') === 'active') {
+    else if (location.href.slice(0, urlItemBase.length) === urlItemBase && sessionStorage.queueSkip === 'active') {
       document.querySelector(btnItem).click();
     }
   }
