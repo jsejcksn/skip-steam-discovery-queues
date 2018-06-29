@@ -42,17 +42,20 @@
       .skip-dialog button {
         box-sizing: border-box;
         border: 0;
-        border-radius: 4px;
         font-family: sans-serif;
         font-size: 32px;
         font-weight: normal;
       }
 
-      .skip-skip {
+      .skip-qty {
         box-sizing: border-box;
-        background-color: rgb(0, 200, 50);
+        background-color: #000;
+        border-radius: 25px;
         color: #fff;
-        padding: 0.3em;
+        height: 50px;
+        line-height: 0;
+        margin-top: 32px;
+        width: 50px;
       }
 
       .skip-cancel {
@@ -66,17 +69,6 @@
         position: absolute;
         top: 0;
         right: 0;
-      }
-
-      .skip-qty {
-        box-sizing: border-box;
-        border: 1px solid #ccc;
-        border-radius: 4px;
-        font-size: 48px;
-        margin: 0;
-        margin-top: 32px;
-        padding: 0.2em;
-        width: 1.5em;
       }
 
       @keyframes slideInDown {
@@ -115,9 +107,10 @@
       html = `
         <div id="skip-dialog" class="animated skip-dialog slideInDown">
           <p>Number of discovery queues to skip:</p>
-          <input id="skip-qty" class="skip-qty" type="number" value="3" min="1" />
-          <button id="skip-skip" class="skip-skip">Start skipping</button>
           <button id="skip-cancel" class="skip-cancel">&times;</button>
+          <button class="skip-qty">1</button>
+          <button class="skip-qty">2</button>
+          <button class="skip-qty">3</button>
         </div>
       `;
     }
@@ -142,17 +135,14 @@
     document.head.appendChild(style);
     document.body.insertAdjacentHTML('beforeend', html);
     if (state === 'begin') {
-      const btnSkip = document.getElementById('skip-skip'),
-            btnCancel = document.getElementById('skip-cancel'),
-            qty = document.getElementById('skip-qty');
-      btnSkip.addEventListener('click', () => {
-        dialogSubmit('skip', parseInt(qty.value));
-      });
-      btnCancel.addEventListener('click', () => {
-        dialogSubmit('cancel');
-      });
+      let buttons = document.querySelectorAll('#skip-dialog button');
+      for (let i = 1; i < buttons.length; i++) {
+        buttons[i].addEventListener('click', () => {
+          dialogSubmit('skip', i);
+        });
+      }
     }
-    else if (state === 'end') {
+    if (state === 'begin' || state === 'end') {
       document.getElementById('skip-cancel').addEventListener('click', () => {
         dialogSubmit('cancel');
       });
