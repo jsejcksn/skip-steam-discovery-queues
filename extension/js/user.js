@@ -176,7 +176,7 @@
   }
 
   function init () {
-    if (location.href === urlQueue) {
+    if (location.href === urlQueue || location.href === urlQueue.slice(0, -1)) {
       if (sessionStorage.queueSkip === 'active') {
         evaluateQueue();
       }
