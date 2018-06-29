@@ -27,7 +27,7 @@
         font-weight: normal;
         padding: 1em;
         width: 400px;
-        position: absolute;
+        position: fixed;
         top: 0;
         left: 50%;
         margin-left: -200px;
