@@ -6,7 +6,7 @@
         urlItemBase = 'https://store.steampowered.com/app/',
         urlQueue = 'https://store.steampowered.com/explore/';
 
-  window.addEventListener('load', init);
+  window.addEventListener('DOMContentLoaded', init);
 
   function dialogShow (state) {
     const css = `
