@@ -1,7 +1,7 @@
 {
   'use strict';
 
-  const btnItem = 'body > div.responsive_page_frame.with_header > div.responsive_page_content > div.responsive_page_template_content > div.game_page_background.game > div.page_content_ctn > div.block > div.queue_overflow_ctn > div > div.queue_actions_ctn > div.next_in_queue_area > div.btn_next_in_queue.btn_next_in_queue_trigger',
+  const btnItem = '#nextInDiscoveryQueue > div.btn_next_in_queue',
         btnQueue = '#refresh_queue_btn',
         urlItemBase = 'https://store.steampowered.com/app/',
         urlQueue = 'https://store.steampowered.com/explore/';
